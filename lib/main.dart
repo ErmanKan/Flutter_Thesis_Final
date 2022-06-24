@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   bool hasPicked = false;
   bool hasProcessed = false;
   String? message = "";
-  String connectionEndpoint = "https://483c-95-70-145-76.eu.ngrok.io/getClass";
+  String connectionEndpoint = "https://c192-95-70-145-76.eu.ngrok.io/getClass";
   String? predictedLabel = "";
   String? _base64;
 
@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
     var map = Map<String,dynamic>.from(resJson);
     _base64 =  map["hist"];
     message = map['message'];
-
 
     if(message == "Success")
       {
@@ -107,10 +106,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text('Blood Picker Demo'),
         ),
-        body: Center(
+        body: SingleChildScrollView(child: Center(
           child:
           Column(
               children: [
@@ -146,19 +146,19 @@ class _HomePageState extends State<HomePage> {
                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                       ),
 
-                    _base64 == null ? Text(
-                      hasProcessed != false
-                          ? 'Histogram Of Grayscale:'
-                          : 'Waiting for Processing',
-                      style: const TextStyle(fontSize: 16),
-                    ):
-                    Image.memory(base64Decode(_base64!)),
+                      _base64 == null ? Text(
+                        hasProcessed != false
+                            ? 'Histogram Of Grayscale:'
+                            : 'Waiting for Processing',
+                        style: const TextStyle(fontSize: 16),
+                      ):
+                      Image.memory(base64Decode(_base64!)),
                     ],
                   ),
                 )
 
               ]),
-        ),
+        ),),
         floatingActionButton: SpeedDial(
           animatedIcon: AnimatedIcons.menu_close,
           children: [
